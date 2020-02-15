@@ -1,0 +1,56 @@
+name: continuous integration
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  test:
+    name: Test on node ${{ matrix.node_version }}
+    runs-on: ${{matrix.os}}
+    strategy:
+      matrix:
+        os: [ubuntu-18.04]
+        node_version: [10, 12]
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@master
+        with:
+          ref: master
+
+      - uses:
+        run: npm run test
+
+  build:
+    name: Build on node ${{ matrix.node_version }}
+    runs-on: ${{matrix.os}}
+    strategy:
+      matrix:
+        os: [ubuntu-18.04]
+        node_version: [10, 12]
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@master
+        with:
+          ref: master
+
+      - uses:
+        run: npm run test
+
+  package:
+    name: Docker Build
+    needs: [test, build]
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@master
+        with:
+          ref: master
+
+      - uses:
+        run: |
+          docker build -t test .
+          docker push hyouk/test:latest

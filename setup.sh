@@ -2,9 +2,10 @@
 
 # This script will prepare development environment
 
-# prepare githooks
-git submodule add https://github.com/youk-h/practice-githooks.git githooks
-source githooks/activate.sh
+# prepare for githooks by using git submodule
+githooks="githooks"
+git submodule add https://github.com/youk-h/practice-githooks.git $githooks
+source $githooks/activate.sh
 
 # setup package.json
 npm init -y

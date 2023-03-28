@@ -55,7 +55,7 @@ jobs:
         run: docker build -t hyouk/test:latest .
 
       - name: Publish to Repository
-        uses: elgohr/Publish-Docker-Github-Action@master
+        uses: elgohr/Publish-Docker-Github-Action@v5
         with:
           name: hyouk/test:latest
           username: ${{ secrets.DOCKER_USERNAME }}
